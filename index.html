@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>个人简历</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Microsoft YaHei', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .resume-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            padding: 30px;
+            position: relative;
+        }
+        
+        .resume-container::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 10px;
+            background: linear-gradient(90deg, #ff9a9e 0%, #fad0c4 50%, #fbc2eb 100%);
+        }
+        
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        
+        .header-icon {
+            font-size: 40px;
+            margin-right: 20px;
+            color: #ff6b6b;
+            transition: all 0.3s ease;
+        }
+        
+        .header:hover .header-icon {
+            transform: translateY(-5px) rotate(10deg);
+        }
+        
+        .title {
+            font-size: 28px;
+            color: #333;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .header:hover .title {
+            transform: translateX(10px);
+            color: #ff6b6b;
+        }
+        
+        .section {
+            margin-bottom: 25px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .section-title {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e9ecef;
+        }
+        
+        .section-icon {
+            font-size: 24px;
+            margin-right: 10px;
+            color: #74b9ff;
+            transition: all 0.3s ease;
+        }
+        
+        .section-title:hover .section-icon {
+            transform: rotate(15deg) scale(1.1);
+            color: #0984e3;
+        }
+        
+        .section-title-text {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            transition: all 0.3s ease;
+        }
+        
+        .section-title:hover .section-title-text {
+            transform: translateX(5px);
+            color: #0984e3;
+        }
+        
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+        }
+        
+        .input-group {
+            flex: 1;
+            min-width: 200px;
+            margin-right: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .input-group:last-child {
+            margin-right: 0;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 14px;
+            color: #555;
+        }
+        
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+        
+        input:focus, select:focus, textarea:focus {
+            border-color: #74b9ff;
+            box-shadow: 0 0 0 3px rgba(116, 185, 255, 0.2);
+            outline: none;
+        }
+        
+        .checkbox-group, .radio-group {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        
+        .checkbox-item, .radio-item {
+            margin-right: 20px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .checkbox-item input, .radio-item input {
+            width: auto;
+            margin-right: 5px;
+        }
+        
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .button-group {
+            display: flex;
+            justify-content: center;
+            margin-top: 30px;
+        }
+        
+        button {
+            padding: 12px 30px;
+            margin: 0 15px;
+            border: none;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .submit-btn {
+            background-color: #00b894;
+            color: white;
+        }
+        
+        .submit-btn:hover {
+            background-color: #00a884;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 10px rgba(0, 184, 148, 0.3);
+        }
+        
+        .clear-btn {
+            background-color: #ff7675;
+            color: white;
+        }
+        
+        .clear-btn:hover {
+            background-color: #e84393;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 10px rgba(255, 118, 117, 0.3);
+        }
+        
+        .photo-upload {
+            display: flex;
+            align-items: center;
+        }
+        
+        .photo-upload input {
+            flex: 1;
+        }
+        
+        .photo-preview {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: #ddd;
+            margin-left: 15px;
+            overflow: hidden;
+            border: 3px solid #74b9ff;
+        }
+        
+        .photo-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        @media (max-width: 768px) {
+            .input-group {
+                min-width: 100%;
+                margin-right: 0;
+            }
+            
+            .row {
+                flex-direction: column;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="resume-container">
+        <div class="header">
+            <i class="fas fa-user-tie header-icon"></i>
+            <h1 class="title">个人简历</h1>
+        </div>
+        
+        <div class="section">
+            <div class="section-title">
+                <i class="fas fa-id-card section-icon"></i>
+                <h2 class="section-title-text">基本信息</h2>
+            </div>
+            <div class="row">
+                <div class="input-group">
+                    <label for="name"><i class="fas fa-signature"></i> 姓名</label>
+                    <input type="text" id="name" placeholder="请输入您的姓名">
+                </div>
+                <div class="input-group">
+                    <label for="gender"><i class="fas fa-venus-mars"></i> 性别</label>
+                    <select id="gender">
+                        <option value="">请选择性别</option>
+                        <option value="male">男</option>
+                        <option value="female">女</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="age"><i class="fas fa-birthday-cake"></i> 年龄</label>
+                    <input type="number" id="age" placeholder="请输入年龄">
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-group photo-upload">
+                    <div style="flex: 1;">
+                        <label for="photo"><i class="fas fa-camera"></i> 照片上传</label>
+                        <input type="file" id="photo" accept="image/*">
+                    </div>
+                    <div class="photo-preview">
+                        <i class="fas fa-user" style="width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; font-size: 30px; color: #666;"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-group">
+                    <label for="hometown"><i class="fas fa-map-marker-alt"></i> 籍贯</label>
+                    <input type="text" id="hometown" placeholder="请输入籍贯">
+                </div>
+                <div class="input-group">
+                    <label for="phone"><i class="fas fa-phone"></i> 联系电话</label>
+                    <input type="tel" id="phone" placeholder="请输入联系电话">
+                </div>
+                <div class="input-group">
+                    <label for="email"><i class="fas fa-envelope"></i> 电子邮箱</label>
+                    <input type="email" id="email" placeholder="请输入电子邮箱">
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-group">
+                    <label for="education"><i class="fas fa-graduation-cap"></i> 学历</label>
+                    <select id="education">
+                        <option value="">请选择学历</option>
+                        <option value="high-school">高中</option>
+                        <option value="college">大专</option>
+                        <option value="bachelor">本科</option>
+                        <option value="master">硕士</option>
+                        <option value="phd">博士</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="health"><i class="fas fa-heartbeat"></i> 健康状况</label>
+                    <select id="health">
+                        <option value="">请选择健康状况</option>
+                        <option value="excellent">优秀</option>
+                        <option value="good">良好</option>
+                        <option value="normal">一般</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="marriage"><i class="fas fa-heart"></i> 婚姻状况</label>
+                    <select id="marriage">
+                        <option value="">请选择婚姻状况</option>
+                        <option value="single">未婚</option>
+                        <option value="married">已婚</option>
+                        <option value="divorced">离异</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <div class="section-title">
+                <i class="fas fa-briefcase section-icon"></i>
+                <h2 class="section-title-text">求职信息</h2>
+            </div>
+            <div class="row">
+                <div class="input-group">
+                    <label><i class="fas fa-bullseye"></i> 求职意向</label>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="job1" name="job_preference" value="frontend">
+                            <label for="job1">前端开发</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="job2" name="job_preference" value="backend">
+                            <label for="job2">后端开发</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="job3" name="job_preference" value="design">
+                            <label for="job3">UI设计</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="job4" name="job_preference" value="product">
+                            <label for="job4">产品经理</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="job5" name="job_preference" value="marketing">
+                            <label for="job5">市场营销</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-group">
+                    <label for="major"><i class="fas fa-book"></i> 专业</label>
+                    <select id="major">
+                        <option value="">请选择专业</option>
+                        <option value="computer">计算机科学</option>
+                        <option value="software">软件工程</option>
+                        <option value="electronic">电子信息</option>
+                        <option value="business">工商管理</option>
+                        <option value="art">艺术设计</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="school"><i class="fas fa-school"></i> 毕业院校</label>
+                    <select id="school">
+                        <option value="">请选择毕业院校</option>
+                        <option value="tsinghua">清华大学</option>
+                        <option value="pku">北京大学</option>
+                        <option value="fudan">复旦大学</option>
+                        <option value="zju">鲁东大学</option>
+                        <option value="sjtu">上海交通大学</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <div class="section-title">
+                <i class="fas fa-certificate section-icon"></i>
+                <h2 class="section-title-text">技能证书</h2>
+            </div>
+            <div class="row">
+                <div class="input-group">
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="cert1" name="certificate" value="english4">
+                            <label for="cert1">英语四级</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="cert2" name="certificate" value="english6">
+                            <label for="cert2">英语六级</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="cert3" name="certificate" value="computer2">
+                            <label for="cert3">计算机二级</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="cert4" name="certificate" value="driver">
+                            <label for="cert4">驾驶证</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="cert5" name="certificate" value="accounting">
+                            <label for="cert5">会计从业资格证</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="cert6" name="certificate" value="teacher">
+                            <label for="cert6">教师资格证</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <div class="section-title">
+                <i class="fas fa-star section-icon"></i>
+                <h2 class="section-title-text">个人特长与爱好</h2>
+            </div>
+            <div class="row">
+                <div class="input-group">
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="hobby1" name="hobby" value="music">
+                            <label for="hobby1">音乐</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="hobby2" name="hobby" value="sports">
+                            <label for="hobby2">运动</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="hobby3" name="hobby" value="reading">
+                            <label for="hobby3">阅读</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="hobby4" name="hobby" value="travel">
+                            <label for="hobby4">旅游</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="hobby5" name="hobby" value="photography">
+                            <label for="hobby5">摄影</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="hobby6" name="hobby" value="drawing">
+                            <label for="hobby6">绘画</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <div class="section-title">
+                <i class="fas fa-project-diagram section-icon"></i>
+                <h2 class="section-title-text">项目经历</h2>
+            </div>
+            <div class="row">
+                <div class="input-group">
+                    <textarea id="project" placeholder="请详细描述您的项目经历..."></textarea>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <div class="section-title">
+                <i class="fas fa-comment section-icon"></i>
+                <h2 class="section-title-text">自我评价</h2>
+            </div>
+            <div class="row">
+                <div class="input-group">
+                    <textarea id="self-evaluation" placeholder="请简要描述您的自我评价..."></textarea>
+                </div>
+            </div>
+        </div>
+        
+        <div class="button-group">
+            <button type="submit" class="submit-btn"><i class="fas fa-paper-plane"></i> 提交简历</button>
+            <button type="reset" class="clear-btn"><i class="fas fa-eraser"></i> 清空重填</button>
+        </div>
+    </div>
+
+    <script>
+        const photoInput = document.getElementById('photo');
+        const photoPreview = document.querySelector('.photo-preview');
+        
+        photoInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    photoPreview.innerHTML = `<img src="${e.target.result}" alt="个人照片">`;
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+        
+        const submitBtn = document.querySelector('.submit-btn');
+        submitBtn.addEventListener('mouseover', function() {
+            this.querySelector('i').style.transform = 'rotate(15deg)';
+        });
+        submitBtn.addEventListener('mouseout', function() {
+            this.querySelector('i').style.transform = 'rotate(0)';
+        });
+        
+        const clearBtn = document.querySelector('.clear-btn');
+        clearBtn.addEventListener('mouseover', function() {
+            this.querySelector('i').style.transform = 'rotate(-15deg)';
+        });
+        clearBtn.addEventListener('mouseout', function() {
+            this.querySelector('i').style.transform = 'rotate(0)';
+        });
+    </script>
+</body>
+</html>
